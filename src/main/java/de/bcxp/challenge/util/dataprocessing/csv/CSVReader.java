@@ -1,9 +1,10 @@
-package de.bcxp.challenge.dataprocessing;
+package de.bcxp.challenge.util.dataprocessing.csv;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import de.bcxp.challenge.util.dataprocessing.Reader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Class used for reading in CSV files
  */
-public class CSVReader implements Reader{
+public class CSVReader implements Reader {
 
     private final CSVReaderConfiguration readerConfiguration;
 
@@ -21,7 +22,7 @@ public class CSVReader implements Reader{
      * Constructor
      * @param readerConfiguration the Configuration that is used to specify the
      *                            intended behaviour of the csv parser,
-     *                            @see de.bcxp.challenge.dataprocessing.CSVReaderConfiguration
+     *                            @see CSVReaderConfiguration
      *                            for details
      */
     public CSVReader(CSVReaderConfiguration readerConfiguration) {

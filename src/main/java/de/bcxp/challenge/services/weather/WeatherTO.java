@@ -1,4 +1,3 @@
 package de.bcxp.challenge.services.weather;
 
-public class WeatherTO {
-}
+public record WeatherTO(int day, int max, int min) {}

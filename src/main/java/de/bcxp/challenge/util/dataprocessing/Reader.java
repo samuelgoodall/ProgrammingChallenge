@@ -1,4 +1,4 @@
-package de.bcxp.challenge.dataprocessing;
+package de.bcxp.challenge.util.dataprocessing;
 
 import java.nio.file.Path;
 import java.util.List;

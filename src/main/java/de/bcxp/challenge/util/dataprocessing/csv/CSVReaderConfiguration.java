@@ -1,4 +1,4 @@
-package de.bcxp.challenge.dataprocessing;
+package de.bcxp.challenge.util.dataprocessing.csv;
 
 /**
  * Configuration Dataclass for specifying the intended behaviour of the CSV parser

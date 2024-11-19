@@ -10,6 +10,10 @@ import java.util.List;
  */
 public class WeatherService extends Service<String[],WeatherTO> {
 
+    /**
+     * Constructor
+     * @param reader Reader the reader implementation used for the Weather service
+     */
     public WeatherService(Reader reader) {
         super(new EntryToWeatherTOMapper(),reader);
     }
@@ -32,6 +36,11 @@ public class WeatherService extends Service<String[],WeatherTO> {
         return minDay;
     }
 
+    /**
+     * Method for computing day of min temp spread from inputFile
+     * @param inputFile Path the path to the input File
+     * @return int the day of smallest TemperatureSpread
+     */
     public int getDayOfSmallestTemperatureSpread(Path inputFile){
         return getDayOfSmallestTemperatureSpread(this.reader.readFile(inputFile));
     }

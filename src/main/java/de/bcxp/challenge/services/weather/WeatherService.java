@@ -4,8 +4,6 @@ import com.opencsv.exceptions.CsvException;
 import de.bcxp.challenge.services.Service;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
 import de.bcxp.challenge.util.dataprocessing.Reader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,8 +13,6 @@ import java.util.List;
  * Service that is used to compute the Day of smallest Temperature spread
  */
 public class WeatherService extends Service<String[], WeatherTO> {
-
-    private final Logger logger = LogManager.getLogger();
 
     /**
      * Constructor
@@ -53,15 +49,13 @@ public class WeatherService extends Service<String[], WeatherTO> {
                 WeatherTO weatherTO = this.mapper.mapFromTo(weatherItem);
                 if (minSpread > weatherTO.max() - weatherTO.min()) {
                     minSpread = weatherTO.max() - weatherTO.min();
-                    if (minSpread >= 0) {
-                        minDay = weatherTO.day();
-                    } else {
-                        logger.error("MinTemp bigger than MaxTemp in Data, data item with day:{}ignored", weatherTO.day());
-                    }
+                    minDay = weatherTO.day();
                 }
                 position++;
             } catch (NumberFormatException e) {
                 logger.error("Entry at position:{} has a non integer number in one of its values, day:{}, is ignored", position, weatherItem[0]);
+            } catch (IllegalArgumentException e) {
+                logger.error(e.getMessage());
             }
         }
 

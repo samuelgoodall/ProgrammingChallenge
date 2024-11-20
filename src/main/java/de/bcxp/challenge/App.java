@@ -1,6 +1,9 @@
 package de.bcxp.challenge;
 
 import com.opencsv.exceptions.CsvException;
+import de.bcxp.challenge.services.countries.CountryPopDensityTO;
+import de.bcxp.challenge.services.countries.CountryService;
+import de.bcxp.challenge.services.countries.EntryToCountryTOMapper;
 import de.bcxp.challenge.services.weather.EntryToWeatherTOMapper;
 import de.bcxp.challenge.services.weather.WeatherService;
 import de.bcxp.challenge.util.dataprocessing.Reader;
@@ -28,6 +31,15 @@ public final class App {
         System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
     }
 
+    public static void doCountryChallenge() throws URISyntaxException, IOException, CsvException {
+        Path path = Paths.get(ClassLoader.getSystemResource("de/bcxp/challenge/csv/countries.csv").toURI());
+        Reader reader = new CSVReader(new CSVReaderConfiguration(';', false, 1));
+        EntryToCountryTOMapper entryToCountryTOMapper = new EntryToCountryTOMapper();
+        CountryService countryService = new CountryService(entryToCountryTOMapper, reader);
+        CountryPopDensityTO result = countryService.getPopulationDensityOfInputsFromFile(path);
+        System.out.printf("Country with highest population density: %s%n", result.country());
+    }
+
     /**
      * This is the main entry method of your program.
      *
@@ -35,7 +47,6 @@ public final class App {
      */
     public static void main(String... args) throws URISyntaxException, IOException, CsvException {
         doWeatherChallenge();
-        String countryWithHighestPopulationDensity = "Some country"; // Your population density analysis function call …
-        System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
+        doCountryChallenge();
     }
 }

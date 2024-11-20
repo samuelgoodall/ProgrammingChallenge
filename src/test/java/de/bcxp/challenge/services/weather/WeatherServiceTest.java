@@ -31,9 +31,9 @@ public class WeatherServiceTest {
     private final String[] invalidInputValuesNotNumbers = new String[]{"5", "A", "B"};
     private final WeatherTO inputMaxBiggerMinTO = new WeatherTO(1, 90, 85);
     private final WeatherTO inputMaxMuchBiggerMinTO = new WeatherTO(2, 90, 5);
-    private final WeatherTO inputMinBiggerMaxTO = new WeatherTO(3, 9, 85);
     private final WeatherTO inputNegativeNumberTO = new WeatherTO(4, -87, -90);
     private final Logger logger = mock(Logger.class);
+
     /**
      * The field of the WeatherService that holds the logger
      * using reflection to access it
@@ -135,7 +135,7 @@ public class WeatherServiceTest {
 
         when(mapper.mapFromTo(inputMaxBiggerMin)).thenReturn(inputMaxBiggerMinTO);
         when(mapper.mapFromTo(inputMaxMuchBiggerMin)).thenReturn(inputMaxMuchBiggerMinTO);
-        when(mapper.mapFromTo(inputMinBiggerMax)).thenReturn(inputMinBiggerMaxTO);
+        when(mapper.mapFromTo(inputMinBiggerMax)).thenThrow(new IllegalArgumentException("Minimum Temperature cannot be larger than maximum temperature!"));
 
         int expected = 1;
 
@@ -144,7 +144,7 @@ public class WeatherServiceTest {
 
         //Assert
         assertEquals(expected, result);
-        verify(logger).error("MinTemp bigger than MaxTemp in Data, data item with day:{}ignored", 3);
+        verify(logger).error("Minimum Temperature cannot be larger than maximum temperature!");
     }
 
     @Test
@@ -178,13 +178,13 @@ public class WeatherServiceTest {
         List<String[]> input = new ArrayList<>();
         input.add(inputMinBiggerMax);
 
-        when(mapper.mapFromTo(inputMinBiggerMax)).thenReturn(inputMinBiggerMaxTO);
+        when(mapper.mapFromTo(inputMinBiggerMax)).thenThrow(new IllegalArgumentException("Minimum Temperature cannot be larger than maximum temperature!"));
 
         //Act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> underTest.getDayOfSmallestTemperatureSpread(input));
 
         //Assert
-        verify(logger).error("MinTemp bigger than MaxTemp in Data, data item with day:{}ignored", 3);
+        verify(logger).error("Minimum Temperature cannot be larger than maximum temperature!");
         assertEquals("The list of weather items does not contain enough valid data!", exception.getMessage());
     }
 

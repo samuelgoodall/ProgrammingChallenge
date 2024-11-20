@@ -1,4 +1,4 @@
-package de.bcxp.challenge.services.weather;
+package de.bcxp.challenge.application.weather.service;
 
 import de.bcxp.challenge.util.dataprocessing.Mapper;
 

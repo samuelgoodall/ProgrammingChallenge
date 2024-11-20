@@ -1,4 +1,4 @@
-package de.bcxp.challenge.services.countries;
+package de.bcxp.challenge.application.countries.controller;
 
 /**
  * Data class for returning result of CountryService

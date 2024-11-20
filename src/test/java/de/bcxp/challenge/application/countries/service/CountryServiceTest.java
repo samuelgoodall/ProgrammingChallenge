@@ -1,17 +1,14 @@
-package de.bcxp.challenge.services.countries;
+package de.bcxp.challenge.application.countries.service;
 
-import com.opencsv.exceptions.CsvException;
-import de.bcxp.challenge.services.weather.WeatherService;
+import de.bcxp.challenge.application.countries.controller.CountryPopDensityTO;
+import de.bcxp.challenge.application.weather.service.WeatherService;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
-import de.bcxp.challenge.util.dataprocessing.Reader;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ReflectionUtils;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +18,8 @@ import static org.mockito.Mockito.*;
 
 public class CountryServiceTest {
 
-    private final Reader reader = mock(Reader.class);
     private final Mapper<String[], CountryTO> mapper = mock(CountryServiceTest.TestMapper.class);
-    private final CountryService underTest = new CountryService(mapper, reader);
+    private final CountryService underTest = new CountryService(mapper);
     private final String[] input = new String[]{"Austria", "Vienna", "1995", "8926000", "83855", "447718", "0.922", "19"};
     private final String[] input2 = new String[]{"Kirgistan", "Vienna", "1995", "9926000", "83855", "447718", "0.922", "19"};
 
@@ -176,27 +172,6 @@ public class CountryServiceTest {
         verify(logger).error("Population cannot be negative!");
         verify(logger).error("Area cannot be negative!");
         assertEquals("The list of country items does not contain enough valid data!", exception.getMessage());
-    }
-
-    @Test
-    void getPopulationDensityOfInputsFromFile_CorrectInputFile_ReturnCorrectResult() throws IOException, CsvException {
-        //Arrange
-        List<String[]> inputs = new ArrayList<>();
-        inputs.add(input);
-
-        Path filepath = mock(Path.class);
-
-        when(mapper.mapFromTo(input)).thenReturn(inputTO);
-        when(reader.readFile(filepath)).thenReturn(inputs);
-
-        CountryPopDensityTO expected = new CountryPopDensityTO("Austria", 106.44565022956293);
-
-        //Act
-        CountryPopDensityTO result = underTest.getPopulationDensityOfInputsFromFile(filepath);
-
-        //Assert
-        assertEquals(expected.country(), result.country());
-        assertEquals(expected.populationDensity(), result.populationDensity());
     }
 
 

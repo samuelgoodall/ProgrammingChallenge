@@ -1,21 +1,18 @@
-package de.bcxp.challenge.services.countries;
+package de.bcxp.challenge.application.countries.service;
 
-import com.opencsv.exceptions.CsvException;
-import de.bcxp.challenge.services.Service;
+import de.bcxp.challenge.application.Service;
+import de.bcxp.challenge.application.countries.controller.CountryPopDensityTO;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
-import de.bcxp.challenge.util.dataprocessing.Reader;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 
 public class CountryService extends Service<String[], CountryTO> {
 
-    public CountryService(Mapper<String[], CountryTO> mapper, Reader reader) {
-        super(mapper, reader);
+    public CountryService(Mapper<String[], CountryTO> mapper) {
+        super(mapper);
     }
 
-    protected CountryPopDensityTO getPopulationDensityOfInputs(List<String[]> countryItems) {
+    public CountryPopDensityTO getPopulationDensityOfInputs(List<String[]> countryItems) {
 
         //verify input integrity
         if (countryItems == null) {
@@ -47,9 +44,5 @@ public class CountryService extends Service<String[], CountryTO> {
         } else {
             throw new IllegalArgumentException("The list of country items does not contain enough valid data!");
         }
-    }
-
-    public CountryPopDensityTO getPopulationDensityOfInputsFromFile(Path inputFile) throws IOException, CsvException {
-        return this.getPopulationDensityOfInputs(this.reader.readFile(inputFile));
     }
 }

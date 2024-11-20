@@ -1,16 +1,14 @@
-package de.bcxp.challenge.services.weather;
+package de.bcxp.challenge.application.weather;
 
-import com.opencsv.exceptions.CsvException;
+import de.bcxp.challenge.application.weather.service.WeatherService;
+import de.bcxp.challenge.application.weather.service.WeatherTO;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
-import de.bcxp.challenge.util.dataprocessing.Reader;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ReflectionUtils;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +19,8 @@ import static org.mockito.Mockito.*;
 
 public class WeatherServiceTest {
 
-    private final Reader reader = mock(Reader.class);
     private final Mapper<String[], WeatherTO> mapper = mock(TestMapper.class);
-    private final WeatherService underTest = new WeatherService(mapper, reader);
+    private final WeatherService underTest = new WeatherService(mapper);
     private final String[] inputMaxBiggerMin = new String[]{"1", "90", "85"};
     private final String[] inputMaxMuchBiggerMin = new String[]{"2", "90", "5"};
     private final String[] inputMinBiggerMax = new String[]{"3", "9", "85"};
@@ -186,29 +183,6 @@ public class WeatherServiceTest {
         //Assert
         verify(logger).error("Minimum Temperature cannot be larger than maximum temperature!");
         assertEquals("The list of weather items does not contain enough valid data!", exception.getMessage());
-    }
-
-    /**
-     * Test of the public Method
-     */
-    @Test
-    void getDayOfSmallestTemperatureSpread_ValidInputFile_CorrectResult() throws IOException, CsvException {
-
-        //Arrange
-        List<String[]> input = new ArrayList<>();
-        input.add(inputMaxBiggerMin);
-        Path filepath = mock(Path.class);
-
-        int expected = 1;
-
-        when(mapper.mapFromTo(inputMaxBiggerMin)).thenReturn(inputMaxBiggerMinTO);
-        when(reader.readFile(filepath)).thenReturn(input);
-
-        //Act
-        int result = underTest.getDayOfSmallestTemperatureSpread(filepath);
-
-        //Assert
-        assertEquals(expected, result);
     }
 
     /**

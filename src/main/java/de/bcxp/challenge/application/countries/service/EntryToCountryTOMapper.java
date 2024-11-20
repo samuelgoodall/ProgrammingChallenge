@@ -1,4 +1,4 @@
-package de.bcxp.challenge.services.countries;
+package de.bcxp.challenge.application.countries.service;
 
 import de.bcxp.challenge.util.dataprocessing.Mapper;
 

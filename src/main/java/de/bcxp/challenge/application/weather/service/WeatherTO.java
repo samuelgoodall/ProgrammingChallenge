@@ -1,4 +1,4 @@
-package de.bcxp.challenge.services.weather;
+package de.bcxp.challenge.application.weather.service;
 
 /**
  * Dataclass for representing needed Data used in the Weather service

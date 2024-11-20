@@ -1,5 +1,7 @@
-package de.bcxp.challenge.services.weather;
+package de.bcxp.challenge.application.weather;
 
+import de.bcxp.challenge.application.weather.service.EntryToWeatherTOMapper;
+import de.bcxp.challenge.application.weather.service.WeatherTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

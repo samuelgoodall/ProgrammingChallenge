@@ -1,5 +1,8 @@
-package de.bcxp.challenge.dataprocessing;
+package de.bcxp.challenge.util.dataprocessing;
 
+import com.opencsv.exceptions.CsvException;
+
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -9,10 +12,11 @@ import java.util.List;
 public interface Reader {
     /**
      * Method for reading in data file
+     *
      * @param filepath Path the path to the data file that is to be read,
      *                 expects file to be in resources folder and expects
      *                 relative path from resources folder
      * @return String[][]
      */
-    List<String[]> readFile(Path filepath);
+    List<String[]> readFile(Path filepath) throws IOException, CsvException;
 }

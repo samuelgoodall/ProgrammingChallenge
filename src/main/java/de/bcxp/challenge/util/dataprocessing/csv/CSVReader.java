@@ -20,10 +20,11 @@ public class CSVReader implements Reader {
 
     /**
      * Constructor
+     *
      * @param readerConfiguration the Configuration that is used to specify the
      *                            intended behaviour of the csv parser,
-     *                            @see CSVReaderConfiguration
-     *                            for details
+     * @see CSVReaderConfiguration
+     * for details
      */
     public CSVReader(CSVReaderConfiguration readerConfiguration) {
         this.readerConfiguration = readerConfiguration;
@@ -31,13 +32,14 @@ public class CSVReader implements Reader {
 
     /**
      * Implements
+     *
      * @param filePath Path the path to the data file that is to be read,
      *                 expects file to be in resources folder and expects
      *                 relative path from resources folder
-     * @return List<String[]> a list of all entries encoded as Strings
+     * @return List<String [ ]> a list of all entries encoded as Strings
      */
     @Override
-    public List<String[]> readFile(Path filePath) {
+    public List<String[]> readFile(Path filePath) throws IOException, CsvException {
         try (java.io.Reader reader = Files.newBufferedReader(filePath)) {
             CSVParser parser = new CSVParserBuilder()
                     .withSeparator(this.readerConfiguration.seperator())
@@ -49,9 +51,6 @@ public class CSVReader implements Reader {
                     .build()) {
                 return csvReader.readAll();
             }
-        } catch (IOException | CsvException e) {
-            //TODO manage Exeption handling properly!
-            throw new RuntimeException(e);
         }
     }
 }

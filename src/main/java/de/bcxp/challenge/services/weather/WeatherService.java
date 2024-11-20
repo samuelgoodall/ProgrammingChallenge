@@ -1,11 +1,13 @@
 package de.bcxp.challenge.services.weather;
 
+import com.opencsv.exceptions.CsvException;
 import de.bcxp.challenge.services.Service;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
 import de.bcxp.challenge.util.dataprocessing.Reader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -76,7 +78,7 @@ public class WeatherService extends Service<String[], WeatherTO> {
      * @param inputFile Path the path to the input File
      * @return int the day of smallest TemperatureSpread
      */
-    public int getDayOfSmallestTemperatureSpread(Path inputFile) {
+    public int getDayOfSmallestTemperatureSpread(Path inputFile) throws IOException, CsvException {
         return getDayOfSmallestTemperatureSpread(this.reader.readFile(inputFile));
     }
 }

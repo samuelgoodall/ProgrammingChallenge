@@ -1,5 +1,6 @@
 package de.bcxp.challenge.services.weather;
 
+import com.opencsv.exceptions.CsvException;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
 import de.bcxp.challenge.util.dataprocessing.Reader;
 import org.apache.logging.log4j.Logger;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ReflectionUtils;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -190,7 +192,7 @@ public class WeatherServiceTest {
      * Test of the public Method
      */
     @Test
-    void getDayOfSmallestTemperatureSpread_ValidInputFile_CorrectResult() {
+    void getDayOfSmallestTemperatureSpread_ValidInputFile_CorrectResult() throws IOException, CsvException {
 
         //Arrange
         List<String[]> input = new ArrayList<>();
@@ -209,6 +211,9 @@ public class WeatherServiceTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Needed for avoiding unchecked assignment exception with mockito mock
+     */
     private interface TestMapper extends Mapper<String[], WeatherTO> {
     }
 

@@ -1,5 +1,6 @@
 package de.bcxp.challenge;
 
+import de.bcxp.challenge.services.weather.EntryToWeatherTOMapper;
 import de.bcxp.challenge.services.weather.WeatherService;
 import de.bcxp.challenge.util.dataprocessing.Reader;
 import de.bcxp.challenge.util.dataprocessing.csv.CSVReader;
@@ -16,17 +17,18 @@ import java.nio.file.Paths;
  */
 public final class App {
 
-
     public static void doWeatherChallenge() throws URISyntaxException {
         Path path = Paths.get(ClassLoader.getSystemResource("de/bcxp/challenge/csv/weather.csv").toURI());
-        Reader reader = new CSVReader(new CSVReaderConfiguration(',',false,1));
-        WeatherService weatherService = new WeatherService(reader);
+        Reader reader = new CSVReader(new CSVReaderConfiguration(',', false, 1));
+        EntryToWeatherTOMapper entryToWeatherTOMapper = new EntryToWeatherTOMapper();
+        WeatherService weatherService = new WeatherService(entryToWeatherTOMapper, reader);
         int dayWithSmallestTempSpread = weatherService.getDayOfSmallestTemperatureSpread(path);
         System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
     }
 
     /**
      * This is the main entry method of your program.
+     *
      * @param args The CLI arguments passed
      */
     public static void main(String... args) throws URISyntaxException {

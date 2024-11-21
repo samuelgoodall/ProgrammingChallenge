@@ -30,6 +30,3 @@ Then to run the main class _de.bcxp.challenge.App_::
 
 To remove the compilation output::
 `mvn clean`
-
-Or use your IDE functionality::
-to run & debug your program.

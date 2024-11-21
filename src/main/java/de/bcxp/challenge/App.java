@@ -23,7 +23,7 @@ public final class App {
         Path path = Paths.get(ClassLoader.getSystemResource("de/bcxp/challenge/csv/weather.csv").toURI());
         WeatherControllerFactory weatherControllerFactory = new WeatherControllerFactory();
         WeatherController weatherController = weatherControllerFactory.createController();
-        int dayWithSmallestTempSpread = weatherController.getResultFromFile(path);
+        int dayWithSmallestTempSpread = weatherController.getDayOfSmallestTemperatureSpread(path);
         System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
     }
 
@@ -31,7 +31,7 @@ public final class App {
         Path path = Paths.get(ClassLoader.getSystemResource("de/bcxp/challenge/csv/countries.csv").toURI());
         CountryControllerFactory countryControllerFactory = new CountryControllerFactory();
         CountryController countryController = countryControllerFactory.createController();
-        CountryPopDensityTO result = countryController.getResultFromFile(path);
+        CountryPopDensityTO result = countryController.getCountryWithHighestPopulationDensity(path);
         System.out.printf("Country with highest population density of %f: %s%n", result.populationDensity(), result.country());
     }
 

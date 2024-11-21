@@ -7,8 +7,19 @@ import de.bcxp.challenge.util.dataprocessing.Reader;
 import de.bcxp.challenge.util.dataprocessing.csv.CSVReader;
 import de.bcxp.challenge.util.dataprocessing.csv.CSVReaderConfiguration;
 
-public class WeatherControllerFactory implements ControllerFactory<Integer, WeatherController> {
+/**
+ * The Factory for obtaining the WeatherController
+ *
+ * @see WeatherController
+ */
+public class WeatherControllerFactory implements ControllerFactory<WeatherController> {
 
+    /**
+     * creates a WeatherController
+     *
+     * @return WeatherController
+     * @see WeatherController
+     */
     @Override
     public WeatherController createController() {
         Reader reader = new CSVReader(new CSVReaderConfiguration(',', false, 1));

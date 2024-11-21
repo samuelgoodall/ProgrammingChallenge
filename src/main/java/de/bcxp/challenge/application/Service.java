@@ -1,6 +1,6 @@
 package de.bcxp.challenge.application;
 
-import de.bcxp.challenge.util.dataprocessing.Mapper;
+import de.bcxp.challenge.util.Mapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -25,14 +25,14 @@ public class CountryControllerTest {
     private final Path inputFile = mock(Path.class);
 
     @Test
-    void getResultFromFile_CorrectFile_ReturnResult() throws IOException, CsvException {
+    void getCountryWithHighestPopulationDensity_CorrectFile_ReturnResult() throws IOException, CsvException {
 
         //Arrange
         when(reader.readFile(inputFile)).thenReturn(inputs);
         when(countryService.getPopulationDensityOfInputs(inputs)).thenReturn(popDensityTO);
 
         //Act
-        CountryPopDensityTO result = underTest.getResultFromFile(inputFile);
+        CountryPopDensityTO result = underTest.getCountryWithHighestPopulationDensity(inputFile);
 
         //Assert
         assertEquals(result.country(), popDensityTO.country());
@@ -40,24 +40,24 @@ public class CountryControllerTest {
     }
 
     @Test
-    void getResultFromFile_FileNotFound_ThrowIOException() throws IOException, CsvException {
+    void getCountryWithHighestPopulationDensity_FileNotFound_ThrowIOException() throws IOException, CsvException {
 
         //Arrange
         when(reader.readFile(inputFile)).thenThrow(new IOException());
 
         //Act&Assert
-        assertThrows(IOException.class, () -> underTest.getResultFromFile(inputFile));
+        assertThrows(IOException.class, () -> underTest.getCountryWithHighestPopulationDensity(inputFile));
     }
 
     @Test
-    void getResultFromFile_EmptyFile_ThrowIllegalArgumentException() throws IOException, CsvException {
+    void getCountryWithHighestPopulationDensity_EmptyFile_ThrowIllegalArgumentException() throws IOException, CsvException {
 
         //Arrange
         when(reader.readFile(inputFile)).thenReturn(inputs);
         when(countryService.getPopulationDensityOfInputs(inputs)).thenThrow(new IllegalArgumentException());
 
         //Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> underTest.getResultFromFile(inputFile));
+        assertThrows(IllegalArgumentException.class, () -> underTest.getCountryWithHighestPopulationDensity(inputFile));
 
     }
 

@@ -24,38 +24,38 @@ public class WeatherControllerTest {
     private final Path inputFile = mock(Path.class);
 
     @Test
-    void getResultFromFile_CorrectFile_ReturnResult() throws IOException, CsvException {
+    void getDayOfSmallestTemperatureSpread_CorrectFile_ReturnResult() throws IOException, CsvException {
 
         //Arrange
         when(reader.readFile(inputFile)).thenReturn(inputs);
         when(weatherService.getDayOfSmallestTemperatureSpread(inputs)).thenReturn(1);
 
         //Act
-        Integer result = underTest.getResultFromFile(inputFile);
+        Integer result = underTest.getDayOfSmallestTemperatureSpread(inputFile);
 
         //Assert
         assertEquals(1, result);
     }
 
     @Test
-    void getResultFromFile_FileNotFound_ThrowIOException() throws IOException, CsvException {
+    void getDayOfSmallestTemperatureSpread_FileNotFound_ThrowIOException() throws IOException, CsvException {
 
         //Arrange
         when(reader.readFile(inputFile)).thenThrow(new IOException());
 
         //Act&Assert
-        assertThrows(IOException.class, () -> underTest.getResultFromFile(inputFile));
+        assertThrows(IOException.class, () -> underTest.getDayOfSmallestTemperatureSpread(inputFile));
     }
 
     @Test
-    void getResultFromFile_EmptyFile_ThrowIllegalArgumentException() throws IOException, CsvException {
+    void getDayOfSmallestTemperatureSpread_EmptyFile_ThrowIllegalArgumentException() throws IOException, CsvException {
 
         //Arrange
         when(reader.readFile(inputFile)).thenReturn(inputs);
         when(weatherService.getDayOfSmallestTemperatureSpread(inputs)).thenThrow(new IllegalArgumentException());
 
         //Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> underTest.getResultFromFile(inputFile));
+        assertThrows(IllegalArgumentException.class, () -> underTest.getDayOfSmallestTemperatureSpread(inputFile));
 
     }
 

@@ -2,16 +2,29 @@ package de.bcxp.challenge.application.countries.service;
 
 import de.bcxp.challenge.application.Service;
 import de.bcxp.challenge.application.countries.controller.CountryPopDensityTO;
-import de.bcxp.challenge.util.dataprocessing.Mapper;
+import de.bcxp.challenge.util.Mapper;
 
 import java.util.List;
 
+/**
+ * The Country Service used for performing business logic for the Countries Data
+ */
 public class CountryService extends Service<String[], CountryTO> {
 
+    /**
+     * Constructor
+     *
+     * @param mapper the Mapper used for mapping from String[] to TOs
+     */
     public CountryService(Mapper<String[], CountryTO> mapper) {
         super(mapper);
     }
 
+    /**
+     * @param countryItems String[] the different data items as String[]
+     * @return CountryPopDensityTO the result
+     * @see CountryPopDensityTO
+     */
     public CountryPopDensityTO getPopulationDensityOfInputs(List<String[]> countryItems) {
 
         this.validateInput(countryItems);

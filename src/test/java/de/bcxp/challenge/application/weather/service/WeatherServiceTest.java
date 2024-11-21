@@ -1,6 +1,6 @@
 package de.bcxp.challenge.application.weather.service;
 
-import de.bcxp.challenge.util.dataprocessing.Mapper;
+import de.bcxp.challenge.util.Mapper;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

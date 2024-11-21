@@ -7,8 +7,15 @@ import de.bcxp.challenge.util.dataprocessing.Reader;
 import de.bcxp.challenge.util.dataprocessing.csv.CSVReader;
 import de.bcxp.challenge.util.dataprocessing.csv.CSVReaderConfiguration;
 
-
-public class CountryControllerFactory implements ControllerFactory<CountryPopDensityTO, CountryController> {
+/**
+ * The Factory for obtaining the CountryController
+ */
+public class CountryControllerFactory implements ControllerFactory<CountryController> {
+    /**
+     * creates a new CountryController
+     *
+     * @return CountryController
+     */
     @Override
     public CountryController createController() {
         Reader reader = new CSVReader(new CSVReaderConfiguration(';', false, 1));

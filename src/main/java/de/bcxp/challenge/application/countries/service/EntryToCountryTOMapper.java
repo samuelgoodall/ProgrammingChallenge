@@ -1,9 +1,11 @@
 package de.bcxp.challenge.application.countries.service;
 
-import de.bcxp.challenge.util.dataprocessing.Mapper;
+import de.bcxp.challenge.util.Mapper;
 
 /**
  * Mapper to map from a raw entry in form of a String[] to a CountryTO
+ *
+ * @see CountryTO
  */
 public class EntryToCountryTOMapper implements Mapper<String[], CountryTO> {
     /**

@@ -26,14 +26,7 @@ public class WeatherService extends Service<String[], WeatherTO> {
     public Integer getDayOfSmallestTemperatureSpread(List<String[]> weatherItems) throws IllegalArgumentException {
 
         //verify input integrity
-        if (weatherItems == null) {
-            throw new IllegalArgumentException("The list of weather items may not be null!");
-        }
-
-        if (weatherItems.isEmpty()) {
-            throw new IllegalArgumentException("The list of weather items may not be empty!");
-        }
-
+        this.validateInput(weatherItems);
 
         int minSpread = Integer.MAX_VALUE;
         Integer minDay = null;

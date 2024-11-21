@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CountryController extends Controller<CountryPopDensityTO> {
 
-    private final CountryService countryService;
+    protected final CountryService countryService;
 
     public CountryController(Reader reader, CountryService countryService) {
         super(reader);

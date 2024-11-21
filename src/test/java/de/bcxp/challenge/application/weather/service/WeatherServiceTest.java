@@ -1,7 +1,5 @@
-package de.bcxp.challenge.application.weather;
+package de.bcxp.challenge.application.weather.service;
 
-import de.bcxp.challenge.application.weather.service.WeatherService;
-import de.bcxp.challenge.application.weather.service.WeatherTO;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -107,7 +105,7 @@ public class WeatherServiceTest {
 
         //Act&Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> underTest.getDayOfSmallestTemperatureSpread(input));
-        assertEquals("The list of weather items may not be empty!", exception.getMessage());
+        assertEquals("The list of items may not be empty!", exception.getMessage());
     }
 
     @Test
@@ -118,7 +116,7 @@ public class WeatherServiceTest {
 
         //Act&Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> underTest.getDayOfSmallestTemperatureSpread(input));
-        assertEquals("The list of weather items may not be null!", exception.getMessage());
+        assertEquals("The list of items may not be null!", exception.getMessage());
     }
 
     @Test

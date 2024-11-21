@@ -14,14 +14,7 @@ public class CountryService extends Service<String[], CountryTO> {
 
     public CountryPopDensityTO getPopulationDensityOfInputs(List<String[]> countryItems) {
 
-        //verify input integrity
-        if (countryItems == null) {
-            throw new IllegalArgumentException("The list of country items may not be null!");
-        }
-
-        if (countryItems.isEmpty()) {
-            throw new IllegalArgumentException("The list of country items may not be empty!");
-        }
+        this.validateInput(countryItems);
 
         double maxPopDensity = 0.0;
         String countryMaxPopDensity = null;

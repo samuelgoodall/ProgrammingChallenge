@@ -1,7 +1,5 @@
-package de.bcxp.challenge.application.weather;
+package de.bcxp.challenge.application.weather.service;
 
-import de.bcxp.challenge.application.weather.service.EntryToWeatherTOMapper;
-import de.bcxp.challenge.application.weather.service.WeatherTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,6 +11,7 @@ public class EntryToWeatherTOMapperTest {
 
     @Test
     void mapFromTo_CorrectInputItem_CorrectWeatherTO() {
+
         //Arrange
         String[] correctInput = new String[]{"1", "90", "85"};
         WeatherTO expected = new WeatherTO(1, 90, 85);
@@ -28,6 +27,7 @@ public class EntryToWeatherTOMapperTest {
 
     @Test
     void mapFromTo_InputItemWithNonNumbers_ThrowIllegalArgumentException() {
+
         //Arrange
         String[] incorrectInput = new String[]{"1", "AB", "DE"};
 

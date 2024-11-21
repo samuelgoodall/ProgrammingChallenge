@@ -1,4 +1,4 @@
-package de.bcxp.challenge.services.weather;
+package de.bcxp.challenge.application.weather.service;
 
 import de.bcxp.challenge.util.dataprocessing.Mapper;
 
@@ -13,7 +13,7 @@ public class EntryToWeatherTOMapper implements Mapper<String[], WeatherTO> {
      * @return WeatherTO
      */
     @Override
-    public WeatherTO mapFromTo(String[] input) throws NumberFormatException {
+    public WeatherTO mapFromTo(String[] input) throws IllegalArgumentException {
         int day = Integer.parseInt(input[0]);
         int maxTemp = Integer.parseInt(input[1]);
         int minTemp = Integer.parseInt(input[2]);

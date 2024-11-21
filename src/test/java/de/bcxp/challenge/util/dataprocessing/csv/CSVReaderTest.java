@@ -16,6 +16,7 @@ public class CSVReaderTest {
     private final Path weatherPath = Paths.get("src/test/resources/de/bcxp/challenge/csv/weathertest.csv");
     private final Path countriesPath = Paths.get("src/test/resources/de/bcxp/challenge/csv/countriestest.csv");
     private final Path noFile = Paths.get("src/test/resources/de/bcxp/challenge/csv");
+    private final Path emptyFile = Paths.get("src/test/resources/de/bcxp/challenge/csv/empty.csv");
 
     @Test
     void readFile_ValidFilePathWithComma_ReturnCorrectResult() throws IOException, CsvException {
@@ -60,6 +61,20 @@ public class CSVReaderTest {
 
         //Act
         List<String[]> result = underTest.readFile(noFile);
+
+        //Assert
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void readFile_FilePathToEmptyFile_ReturnEmptyList() throws IOException, CsvException {
+
+        //Arrange
+        CSVReaderConfiguration csvReaderConfiguration = new CSVReaderConfiguration(';', false, 1);
+        CSVReader underTest = new CSVReader(csvReaderConfiguration);
+
+        //Act
+        List<String[]> result = underTest.readFile(emptyFile);
 
         //Assert
         assertTrue(result.isEmpty());

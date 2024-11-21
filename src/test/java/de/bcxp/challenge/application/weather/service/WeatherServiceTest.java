@@ -1,16 +1,12 @@
-package de.bcxp.challenge.services.weather;
+package de.bcxp.challenge.application.weather.service;
 
-import com.opencsv.exceptions.CsvException;
 import de.bcxp.challenge.util.dataprocessing.Mapper;
-import de.bcxp.challenge.util.dataprocessing.Reader;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ReflectionUtils;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +17,8 @@ import static org.mockito.Mockito.*;
 
 public class WeatherServiceTest {
 
-    private final Reader reader = mock(Reader.class);
     private final Mapper<String[], WeatherTO> mapper = mock(TestMapper.class);
-    private final WeatherService underTest = new WeatherService(mapper, reader);
+    private final WeatherService underTest = new WeatherService(mapper);
     private final String[] inputMaxBiggerMin = new String[]{"1", "90", "85"};
     private final String[] inputMaxMuchBiggerMin = new String[]{"2", "90", "5"};
     private final String[] inputMinBiggerMax = new String[]{"3", "9", "85"};
@@ -31,9 +26,9 @@ public class WeatherServiceTest {
     private final String[] invalidInputValuesNotNumbers = new String[]{"5", "A", "B"};
     private final WeatherTO inputMaxBiggerMinTO = new WeatherTO(1, 90, 85);
     private final WeatherTO inputMaxMuchBiggerMinTO = new WeatherTO(2, 90, 5);
-    private final WeatherTO inputMinBiggerMaxTO = new WeatherTO(3, 9, 85);
     private final WeatherTO inputNegativeNumberTO = new WeatherTO(4, -87, -90);
     private final Logger logger = mock(Logger.class);
+
     /**
      * The field of the WeatherService that holds the logger
      * using reflection to access it
@@ -110,7 +105,7 @@ public class WeatherServiceTest {
 
         //Act&Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> underTest.getDayOfSmallestTemperatureSpread(input));
-        assertEquals("The list of weather items may not be empty!", exception.getMessage());
+        assertEquals("The list of items may not be empty!", exception.getMessage());
     }
 
     @Test
@@ -121,7 +116,7 @@ public class WeatherServiceTest {
 
         //Act&Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> underTest.getDayOfSmallestTemperatureSpread(input));
-        assertEquals("The list of weather items may not be null!", exception.getMessage());
+        assertEquals("The list of items may not be null!", exception.getMessage());
     }
 
     @Test
@@ -135,7 +130,7 @@ public class WeatherServiceTest {
 
         when(mapper.mapFromTo(inputMaxBiggerMin)).thenReturn(inputMaxBiggerMinTO);
         when(mapper.mapFromTo(inputMaxMuchBiggerMin)).thenReturn(inputMaxMuchBiggerMinTO);
-        when(mapper.mapFromTo(inputMinBiggerMax)).thenReturn(inputMinBiggerMaxTO);
+        when(mapper.mapFromTo(inputMinBiggerMax)).thenThrow(new IllegalArgumentException("Minimum Temperature cannot be larger than maximum temperature!"));
 
         int expected = 1;
 
@@ -144,7 +139,7 @@ public class WeatherServiceTest {
 
         //Assert
         assertEquals(expected, result);
-        verify(logger).error("MinTemp bigger than MaxTemp in Data, data item with day:{}ignored", 3);
+        verify(logger).error("Minimum Temperature cannot be larger than maximum temperature!");
     }
 
     @Test
@@ -178,37 +173,14 @@ public class WeatherServiceTest {
         List<String[]> input = new ArrayList<>();
         input.add(inputMinBiggerMax);
 
-        when(mapper.mapFromTo(inputMinBiggerMax)).thenReturn(inputMinBiggerMaxTO);
+        when(mapper.mapFromTo(inputMinBiggerMax)).thenThrow(new IllegalArgumentException("Minimum Temperature cannot be larger than maximum temperature!"));
 
         //Act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> underTest.getDayOfSmallestTemperatureSpread(input));
 
         //Assert
-        verify(logger).error("MinTemp bigger than MaxTemp in Data, data item with day:{}ignored", 3);
+        verify(logger).error("Minimum Temperature cannot be larger than maximum temperature!");
         assertEquals("The list of weather items does not contain enough valid data!", exception.getMessage());
-    }
-
-    /**
-     * Test of the public Method
-     */
-    @Test
-    void getDayOfSmallestTemperatureSpread_ValidInputFile_CorrectResult() throws IOException, CsvException {
-
-        //Arrange
-        List<String[]> input = new ArrayList<>();
-        input.add(inputMaxBiggerMin);
-        Path filepath = mock(Path.class);
-
-        int expected = 1;
-
-        when(mapper.mapFromTo(inputMaxBiggerMin)).thenReturn(inputMaxBiggerMinTO);
-        when(reader.readFile(filepath)).thenReturn(input);
-
-        //Act
-        int result = underTest.getDayOfSmallestTemperatureSpread(filepath);
-
-        //Assert
-        assertEquals(expected, result);
     }
 
     /**
